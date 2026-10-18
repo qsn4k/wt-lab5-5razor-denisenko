@@ -1,0 +1,29 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.Players.CreateModel
+@{
+    ViewData["Title"] = "Добавить игрока";
+}
+
+<section class="page-intro compact-intro"><div><div class="eyebrow">NEW PLAYER / 02</div><h1>Добавить <span class="neon-pink">игрока</span></h1><p>Заполни карточку участника. Поля проходят проверку перед сохранением.</p></div><div class="terminal-mark">PLAYER<br /><strong>CREATE</strong></div></section>
+
+<div class="form-layout">
+    <section class="form-panel">
+        <div class="panel-topline"><span>REGISTRATION CONSOLE</span><span>FORM / 01</span></div>
+        <form method="post" class="cyber-form">
+            <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+            <div class="form-field"><label asp-for="Player.Nickname" class="form-label"></label><input asp-for="Player.Nickname" class="form-control" placeholder="Например, CyberWolf" autocomplete="off" /><span asp-validation-for="Player.Nickname" class="field-error"></span><small>От 2 до 30 символов.</small></div>
+            <div class="form-field"><label asp-for="Player.Game" class="form-label"></label><select asp-for="Player.Game" class="form-select"><option value="">Выбери дисциплину</option><option>Counter-Strike 2</option><option>Dota 2</option><option>Valorant</option><option>Minecraft</option><option>Другой турнир</option></select><span asp-validation-for="Player.Game" class="field-error"></span></div>
+            <div class="form-two-columns">
+                <div class="form-field"><label asp-for="Player.Rating" class="form-label"></label><input asp-for="Player.Rating" class="form-control" type="number" min="0" max="5000" /><span asp-validation-for="Player.Rating" class="field-error"></span></div>
+                <div class="form-field"><label asp-for="Player.Wins" class="form-label"></label><input asp-for="Player.Wins" class="form-control" type="number" min="0" max="100000" /><span asp-validation-for="Player.Wins" class="field-error"></span></div>
+            </div>
+            <div class="form-field"><label asp-for="Player.Losses" class="form-label"></label><input asp-for="Player.Losses" class="form-control" type="number" min="0" max="100000" /><span asp-validation-for="Player.Losses" class="field-error"></span></div>
+            <div class="form-actions"><button type="submit" class="btn btn-neon btn-lg">Сохранить игрока <span aria-hidden="true">↗</span></button><a class="btn btn-ghost btn-lg" asp-page="/Players/Index">Назад к списку</a></div>
+        </form>
+    </section>
+    <aside class="form-aside"><div class="aside-icon">✦</div><div class="eyebrow">SYSTEM NOTE</div><h2>Новый участник.<br /><span class="neon-cyan">Новая история.</span></h2><p>Рейтинг и статистика будут доступны в общем каталоге сразу после сохранения.</p><ul><li>Проверка обязательных полей</li><li>Автоматический ID профиля</li><li>Расчёт процента побед</li></ul><div class="aside-foot"><span class="pulse-dot"></span> Данные хранятся в памяти приложения</div></aside>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

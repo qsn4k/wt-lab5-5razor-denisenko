@@ -1,0 +1,22 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.Players.EditModel
+@{
+    ViewData["Title"] = "Редактировать игрока";
+}
+
+<section class="page-intro compact-intro"><div><div class="eyebrow">PLAYER DOSSIER / EDIT @Model.Player.Id.ToString("000")</div><h1>Обновить <span class="neon-cyan">профиль</span></h1><p>Измени игровые данные участника и сохрани обновления.</p></div><div class="terminal-mark">PLAYER<br /><strong>EDIT</strong></div></section>
+<section class="form-panel edit-form-panel">
+    <div class="panel-topline"><span>EDIT CONSOLE / @Model.Player.Nickname</span><span>FORM / 02</span></div>
+    <form method="post" asp-route-id="@Model.Player.Id" class="cyber-form">
+        <input type="hidden" asp-for="Player.Id" />
+        <div asp-validation-summary="ModelOnly" class="validation-summary" role="alert"></div>
+        <div class="form-field"><label asp-for="Player.Nickname" class="form-label"></label><input asp-for="Player.Nickname" class="form-control" /><span asp-validation-for="Player.Nickname" class="field-error"></span></div>
+        <div class="form-field"><label asp-for="Player.Game" class="form-label"></label><select asp-for="Player.Game" class="form-select"><option>Counter-Strike 2</option><option>Dota 2</option><option>Valorant</option><option>Minecraft</option><option>Другой турнир</option></select><span asp-validation-for="Player.Game" class="field-error"></span></div>
+        <div class="form-two-columns"><div class="form-field"><label asp-for="Player.Rating" class="form-label"></label><input asp-for="Player.Rating" class="form-control" type="number" /><span asp-validation-for="Player.Rating" class="field-error"></span></div><div class="form-field"><label asp-for="Player.Wins" class="form-label"></label><input asp-for="Player.Wins" class="form-control" type="number" /><span asp-validation-for="Player.Wins" class="field-error"></span></div></div>
+        <div class="form-field"><label asp-for="Player.Losses" class="form-label"></label><input asp-for="Player.Losses" class="form-control" type="number" /><span asp-validation-for="Player.Losses" class="field-error"></span></div>
+        <div class="form-actions"><button type="submit" class="btn btn-neon btn-lg">Сохранить изменения ↗</button><a class="btn btn-ghost btn-lg" asp-page="/Players/Details" asp-route-id="@Model.Player.Id">Отмена</a></div>
+    </form>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

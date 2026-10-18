@@ -1,0 +1,64 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.IndexModel
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<section class="hero-panel">
+    <div class="hero-grid">
+        <div class="hero-copy">
+            <div class="system-pill"><span class="pulse-dot"></span> SYSTEM ONLINE <span class="pill-divider">/</span> SECTOR 07</div>
+            <div class="eyebrow">NEON ESPORTS NETWORK</div>
+            <h1 class="hero-title">Играй.<br /><span class="neon-cyan">Побеждай.</span><br /><span class="neon-pink">Стань легендой.</span></h1>
+            <p class="hero-description">Твоя игра. Твои правила. Твой рейтинг. Управляй составом, следи за результатами и поднимайся на вершину киберспортивной таблицы.</p>
+            <div class="hero-actions">
+                <a class="btn btn-neon btn-lg" asp-page="/Players/Index">Открыть игроков <span aria-hidden="true">↗</span></a>
+                <a class="btn btn-ghost btn-lg" asp-page="/Players/Top">Рейтинг бойцов</a>
+            </div>
+            <div class="hero-meta"><span>01 / CORE <small>Управление игроками</small></span><span>02 / RANK <small>Рейтинг ELO</small></span><span>03 / LIVE <small>Статистика матчей</small></span></div>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-grid" aria-hidden="true"></div>
+            <div class="visual-orbit visual-orbit--outer" aria-hidden="true"></div>
+            <div class="visual-orbit visual-orbit--inner" aria-hidden="true"></div>
+            <img src="~/images/tournament.svg" alt="Неоновая эмблема киберспортивного турнира" class="tournament-art" />
+            <div class="floating-chip floating-chip--top">RANKING SYSTEM <strong>ACTIVE</strong></div>
+            <div class="floating-chip floating-chip--bottom"><span class="chip-icon">✦</span><span>ELITE PLAYERS<small>Рейтинг обновлён</small></span><strong>+24%</strong></div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-grid" aria-label="Статистика платформы">
+    <article class="stat-card"><span class="stat-icon">◈</span><div><span class="stat-label">УЧАСТНИКОВ</span><strong>@Model.PlayerCount.ToString("00")</strong><small>в базе турнира</small></div><span class="stat-accent cyan"></span></article>
+    <article class="stat-card"><span class="stat-icon">⌘</span><div><span class="stat-label">ИГРОВЫХ ДИСЦИПЛИН</span><strong>@Model.GameCount.ToString("00")</strong><small>активные направления</small></div><span class="stat-accent pink"></span></article>
+    <article class="stat-card"><span class="stat-icon">↗</span><div><span class="stat-label">ПОБЕД В ПРОФИЛЯХ</span><strong>@Model.TotalWins.ToString("N0")</strong><small>общая статистика игроков</small></div><span class="stat-accent violet"></span></article>
+</section>
+
+<section class="section-block">
+    <div class="section-heading"><div><div class="eyebrow">PLATFORM MODULES</div><h2>Твой арсенал</h2><p>Всё необходимое для управления киберспортивной лигой.</p></div><a class="text-link" asp-page="/Players/Index">Весь состав <span aria-hidden="true">→</span></a></div>
+    <div class="feature-grid">
+        <article class="feature-card"><div class="feature-number">01</div><div class="feature-symbol cyan">⌁</div><h3>Центр игроков</h3><p>Добавляй участников, редактируй профили и находи нужного бойца в общей базе.</p><a asp-page="/Players/Index">Открыть модуль ↗</a></article>
+        <article class="feature-card"><div class="feature-number">02</div><div class="feature-symbol pink">⌗</div><h3>Статистика матчей</h3><p>Победы, поражения и процент успешных матчей — вся статистика в одном интерфейсе.</p><a asp-page="/Players/Index">Смотреть статистику ↗</a></article>
+        <article class="feature-card"><div class="feature-number">03</div><div class="feature-symbol violet">♛</div><h3>Таблица лидеров</h3><p>Сравнивай рейтинги ELO и смотри, кто занимает верхние позиции прямо сейчас.</p><a asp-page="/Players/Top">Открыть рейтинг ↗</a></article>
+    </div>
+</section>
+
+<section class="leader-strip">
+    <div class="section-heading"><div><div class="eyebrow">TOP SQUAD / LIVE DATA</div><h2>Лидеры рейтинга</h2><p>Три участника с самым высоким рейтингом из текущего набора данных.</p></div><a class="text-link" asp-page="/Players/Top">Полный рейтинг ↗</a></div>
+    <div class="leader-list">
+        @for (var i = 0; i < Model.TopPlayers.Count; i++)
+        {
+            var player = Model.TopPlayers[i];
+            <a class="leader-row" asp-page="/Players/Details" asp-route-id="@player.Id">
+                <span class="leader-place">@((i + 1).ToString("00"))</span><span class="leader-avatar">@player.Nickname.Substring(0, 1).ToUpperInvariant()</span>
+                <span class="leader-name"><strong>@player.Nickname</strong><small>@player.Game</small></span><span class="leader-rating"><strong>@player.Rating.ToString("N0")</strong><small>RATING</small></span><span class="leader-arrow">↗</span>
+            </a>
+        }
+    </div>
+</section>
+
+<section class="developer-panel">
+    <div class="developer-orb" aria-hidden="true">DD</div>
+    <div><div class="eyebrow">BEHIND THE PROJECT</div><h2>Разработчик — Денисенко Даниил</h2><p>Мне интересны современные веб-технологии, искусственный интеллект и кибербезопасность. Tournament Hub объединяет работу с данными и стремление создать удобный, функциональный и визуально выразительный продукт.</p><div class="tag-row"><span>C# / ASP.NET CORE</span><span>RAZOR PAGES</span><span>AI & SECURITY</span></div></div>
+    <div class="developer-quote">«Из идеи —<br />в код.<br /><span>Из кода — в результат.</span>»</div>
+</section>

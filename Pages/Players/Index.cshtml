@@ -1,0 +1,41 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.Players.IndexModel
+@{
+    ViewData["Title"] = "Игроки";
+}
+
+<section class="page-intro">
+    <div><div class="eyebrow">PLAYER DATABASE / 01</div><h1>Состав <span class="neon-cyan">игроков</span></h1><p>Управляй участниками, анализируй статистику и находи следующего чемпиона.</p></div>
+    <a class="btn btn-neon" asp-page="/Players/Create">＋ Новый игрок</a>
+</section>
+
+<section class="filter-panel">
+    <form method="get" class="filter-form">
+        <label class="filter-field"><span>ПОИСК ПО НИКНЕЙМУ</span><input type="search" name="search" value="@Model.Search" placeholder="Например, CyberWolf" /></label>
+        <label class="filter-field"><span>ИГРОВАЯ ДИСЦИПЛИНА</span><select name="game"><option value="">Все игры</option>@foreach (var game in Model.Games){<option value="@game" selected="@(string.Equals(Model.Game, game, StringComparison.OrdinalIgnoreCase))">@game</option>}</select></label>
+        <button type="submit" class="btn btn-neon">Применить фильтры</button>
+        <a class="btn btn-ghost" asp-page="/Players/Index">Сбросить</a>
+    </form>
+</section>
+
+<div class="results-bar"><span><span class="pulse-dot"></span> @Model.Players.Count @(Model.Players.Count == 1 ? "ИГРОК" : "ИГРОКОВ") В СПИСКЕ</span><span>СОРТИРОВКА: <strong>РЕЙТИНГ ↓</strong></span></div>
+
+@if (Model.Players.Count == 0)
+{
+    <section class="empty-state"><div class="empty-symbol">⌕</div><h2>Ничего не найдено</h2><p>Измени поисковый запрос или сбрось фильтры.</p><a class="btn btn-neon" asp-page="/Players/Index">Показать всех игроков</a></section>
+}
+else
+{
+    <div class="player-grid">
+        @foreach (var player in Model.Players)
+        {
+            <article class="player-card">
+                <div class="player-card-top"><span class="player-id">ID / @player.Id.ToString("000")</span><span class="status-badge"><i></i> В БАЗЕ</span></div>
+                <div class="player-profile"><div class="player-avatar">@player.Nickname.Substring(0, 1).ToUpperInvariant()</div><div><h2>@player.Nickname</h2><p>@player.Game</p></div></div>
+                <div class="rating-block"><span>ТЕКУЩИЙ РЕЙТИНГ</span><strong>@player.Rating.ToString("N0")</strong><div class="rating-track"><i style="width: @Math.Clamp(player.Rating / 5000.0 * 100.0, 0, 100).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)%"></i></div></div>
+                <div class="player-metrics"><div><strong>@player.Wins</strong><span>ПОБЕДЫ</span></div><div><strong>@player.Losses</strong><span>ПОРАЖЕНИЯ</span></div><div><strong>@player.WinRate.ToString("0.#")%</strong><span>WIN RATE</span></div></div>
+                <div class="player-card-footer"><span>Участник #@player.Id</span><a asp-page="/Players/Details" asp-route-id="@player.Id">Профиль <span aria-hidden="true">↗</span></a></div>
+            </article>
+        }
+    </div>
+}

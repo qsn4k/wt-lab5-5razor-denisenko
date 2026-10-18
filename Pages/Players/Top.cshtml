@@ -1,0 +1,13 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.Players.TopModel
+@{
+    ViewData["Title"] = "Топ рейтинга";
+}
+<section class="page-intro"><div><div class="eyebrow">RANKING SYSTEM / TOP 03</div><h1>Зал <span class="neon-pink">славы</span></h1><p>Три участника с самым высоким текущим рейтингом.</p></div><a class="btn btn-neon" asp-page="/Players/Index">Весь состав ↗</a></section>
+<div class="top-grid">
+    @for (var i = 0; i < Model.Players.Count; i++)
+    {
+        var player = Model.Players[i];
+        <a class="top-card top-card--@(i + 1)" asp-page="/Players/Details" asp-route-id="@player.Id"><div class="top-crown">@(i == 0 ? "♛" : i == 1 ? "✦" : "✧")</div><div class="top-position">RANK #@(i + 1)</div><div class="top-avatar">@player.Nickname.Substring(0, 1).ToUpperInvariant()</div><h2>@player.Nickname</h2><p>@player.Game</p><div class="top-score"><strong>@player.Rating.ToString("N0")</strong><small>RATING POINTS</small></div><div class="top-record"><span>@player.Wins побед</span><span>@player.WinRate.ToString("0.#")% win rate</span></div><span class="top-profile-link">Открыть профиль ↗</span></a>
+    }
+</div>
