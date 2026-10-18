@@ -1,0 +1,6 @@
+@page
+@model wt_lab5_5razor_denisenko.Pages.ErrorModel
+@{
+    ViewData["Title"] = "Ошибка";
+}
+<section class="empty-state"><div class="empty-symbol">!</div><div class="eyebrow">SYSTEM ERROR</div><h1>Что-то пошло не так</h1><p>Не удалось обработать запрос. Попробуй вернуться на главную страницу.</p><p class="small-muted">Код запроса: @Model.RequestId</p><a class="btn btn-neon" asp-page="/Index">Вернуться на главную</a></section>

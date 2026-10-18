@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>wt_lab5_5razor_denisenko</RootNamespace>
+    <AssemblyName>wt-lab5-5razor-denisenko</AssemblyName>
+  </PropertyGroup>
+</Project>
