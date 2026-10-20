@@ -13,25 +13,6 @@
 - общий `PlayerStore` в памяти процесса, Bootstrap и адаптивный неоновый интерфейс;
 - Dockerfile для публикации приложения как Render Web Service.
 
-> База данных не используется. Данные, изменённые пользователем, сохраняются только до перезапуска процесса.
-
-## Локальный запуск
-
-Требуется .NET SDK 9.0.
-
-```bash
-dotnet restore
-dotnet run
-```
-
-Откройте `http://localhost:10000`.
-
-## Docker
-
-```bash
-docker build -t wt-lab5-5razor-denisenko .
-docker run --rm -p 10000:10000 -e PORT=10000 wt-lab5-5razor-denisenko
-```
 
 ## Основные страницы
 
@@ -42,17 +23,8 @@ docker run --rm -p 10000:10000 -e PORT=10000 wt-lab5-5razor-denisenko
 - `/Players/Edit?id=1` — редактирование;
 - `/Players/Top` — топ-3 по рейтингу.
 
-## Публикация на Render
+## Публикации
 
-1. Создайте GitHub-репозиторий `wt-lab5-5razor-denisenko` и отправьте проект в ветку `main`.
-2. В Render выберите **New → Web Service**, подключите репозиторий и выберите Runtime **Docker**.
-3. Дождитесь успешной сборки и deployment, затем проверьте маршруты выше.
-4. После создания впишите URL Render и URL GitHub в этот раздел и в отчёт.
+**GitHub URL:** https://github.com/qsn4k/wt-lab5-5razor-denisenko
 
-**GitHub URL:** добавить после создания репозитория.
-
-**Render URL:** добавить после успешной публикации.
-
-## Сравнение MVC и Razor Pages
-
-В WT-4 запрос проходил через `PlayersController` и его action-методы, возвращавшие Razor Views. В WT-5 страница находится в каталоге `Pages`, а связанный `PageModel` содержит обработчики `OnGet` и `OnPost`. Razor Pages — не отдельный серверный фреймворк, а модель организации приложения ASP.NET Core; инфраструктура маршрутизации, Razor, middleware и dependency injection остаётся общей.
+**Render URL:** https://wt-lab5-5razor-denisenko.onrender.com/
