@@ -1,0 +1,171 @@
+﻿@page
+@model wt_lab5_5razor_denisenko.Pages.Tournaments.IndexModel
+
+@{
+    ViewData["Title"] = "Турниры";
+}
+
+<section class="page-intro">
+    <div>
+        <div class="eyebrow">TOURNAMENT DATABASE / 02</div>
+        <h1>Список <span class="neon-cyan">турниров</span></h1>
+        <p>
+            Выбирай дисциплину, следи за соревнованиями
+            и находи новые возможности для побед.
+        </p>
+    </div>
+</section>
+
+<section class="filter-panel">
+    <form method="get" class="filter-form tournament-filter-form">
+        <label class="filter-field">
+            <span>ПОИСК ПО НАЗВАНИЮ ИЛИ ИГРЕ</span>
+            <input type="search"
+                   name="search"
+                   value="@Model.Search"
+                   placeholder="Например, Cyber Cup" />
+        </label>
+
+        <label class="filter-field">
+            <span>ИГРОВАЯ ДИСЦИПЛИНА</span>
+            <select name="game">
+                <option value="">Все игры</option>
+                @foreach (var game in Model.Games)
+                {
+                    <option value="@game"
+                            selected="@(string.Equals(
+                                                        Model.Game,
+                                                        game,
+                                                        StringComparison.OrdinalIgnoreCase))">
+                        @game
+                    </option>
+                }
+            </select>
+        </label>
+
+        <label class="filter-field">
+            <span>СТАТУС ТУРНИРА</span>
+            <select name="status">
+                <option value="">Все статусы</option>
+                @foreach (var status in Model.Statuses)
+                {
+                    <option value="@status"
+                            selected="@(string.Equals(
+                                                        Model.Status,
+                                                        status,
+                                                        StringComparison.OrdinalIgnoreCase))">
+                        @status
+                    </option>
+                }
+            </select>
+        </label>
+
+        <button type="submit" class="btn btn-neon">
+            Применить
+        </button>
+
+        <a class="btn btn-ghost" asp-page="/Tournaments/Index">
+            Сбросить
+        </a>
+    </form>
+</section>
+
+<div class="results-bar">
+    <span>
+        <span class="pulse-dot"></span>
+        @Model.Tournaments.Count ТУРНИРОВ НАЙДЕНО
+    </span>
+    <span>СОРТИРОВКА: <strong>ПО СТАТУСУ И ДАТЕ</strong></span>
+</div>
+
+@if (Model.Tournaments.Count == 0)
+{
+    <section class="empty-state">
+        <div class="empty-symbol">⌕</div>
+        <h2>Турниры не найдены</h2>
+        <p>Измени поисковый запрос или сбрось фильтры.</p>
+
+        <a class="btn btn-neon" asp-page="/Tournaments/Index">
+            Показать все турниры
+        </a>
+    </section>
+}
+else
+{
+    <div class="tournament-grid">
+        @foreach (var tournament in Model.Tournaments)
+        {
+            var statusClass = tournament.Status switch
+            {
+                "Идёт" => "tournament-status--live",
+                "Завершён" => "tournament-status--finished",
+                _ => "tournament-status--upcoming"
+            };
+
+            <article class="player-card tournament-card">
+                <div class="player-card-top">
+                    <span class="player-id">
+                        TOURNAMENT / @tournament.Id.ToString("000")
+                    </span>
+
+                    <span class="status-badge @statusClass">
+                        <i></i>
+                        @tournament.Status
+                    </span>
+                </div>
+
+                <div class="tournament-heading">
+                    <h2>@tournament.Name</h2>
+                    <p>@tournament.Game</p>
+                </div>
+
+                <div class="tournament-date">
+                    <span>ДАТА НАЧАЛА</span>
+                    <strong>
+                        @tournament.StartDate.ToString("dd.MM.yyyy")
+                    </strong>
+                    <span>
+                        @tournament.StartDate.ToString("HH:mm")
+                    </span>
+                </div>
+
+                <div class="player-metrics">
+                    <div>
+                        <strong>
+                            @tournament.CurrentPlayers/@tournament.MaxPlayers
+                        </strong>
+                        <span>УЧАСТНИКИ</span>
+                    </div>
+
+                    <div>
+                        <strong>@tournament.AvailableSlots</strong>
+                        <span>СВОБОДНЫЕ МЕСТА</span>
+                    </div>
+
+                    <div>
+                        <strong>@tournament.PrizePool.ToString("N0")</strong>
+                        <span>ПРИЗОВОЙ ФОНД · BYN</span>
+                    </div>
+                </div>
+
+                <div class="tournament-progress">
+                    <div class="tournament-progress-label">
+                        <span>ЗАПОЛНЕННОСТЬ</span>
+                        <strong>
+                            @tournament.FillPercentage.ToString("0")%
+                        </strong>
+                    </div>
+
+                    <div class="rating-track">
+                        <i style="width: @tournament.FillPercentage.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)%"></i>
+                    </div>
+                </div>
+
+                <div class="player-card-footer">
+                    <span>Турнир #@tournament.Id</span>
+                    <span>Участие: @tournament.CurrentPlayers из @tournament.MaxPlayers</span>
+                </div>
+            </article>
+        }
+    </div>
+}
